@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 5000;
-const cors = require("cors")
+const cors = require('cors')
 
 app.use(express.json())
 app.use(cors())
@@ -12,9 +12,9 @@ require('./db/config');
 const User = require('./db/User');
 
 // طلب جلب البيانات من العميل
-app.post('/register', (req, resp) => {
+app.post('/register', async (req, resp) => {
     const user = new User(req.body)
-    const result = user.save()
+    const result = await user.save()
     resp.send(result)
 })
 
