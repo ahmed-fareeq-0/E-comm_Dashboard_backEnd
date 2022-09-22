@@ -11,11 +11,26 @@ require('./db/config');
 // user Schema
 const User = require('./db/User');
 
-// طلب جلب البيانات من العميل
+// register and take info user
 app.post('/register', async (req, resp) => {
     const user = new User(req.body)
     const result = await user.save()
     resp.send(result)
+})
+
+// login 
+app.post('/login', async (req,resp) => {
+    
+    if(req.body.password && req.body.email){
+        let user = await User.findOne(req.body).select('-password');
+        if(user){
+            resp.send(user)
+        }else{
+            resp.send({result: 'no user found'})
+        }
+    }else{
+        resp.send({result: 'no  pass or email'})
+    }
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}`))
