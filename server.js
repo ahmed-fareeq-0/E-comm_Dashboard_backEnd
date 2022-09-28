@@ -43,4 +43,14 @@ app.post('/add-product', async (req, resp) => {
 
 })
 
+// send product from back-end to front-end
+app.get('/products', async (req,resp) => {
+    let products = await PrdouctsSchema.find();
+    if(products.length > 0){
+        resp.send(products)
+    }else{
+        resp.send({result: 'no products found'})
+    }
+})
+
 app.listen(port, () => console.log(`Example app listening on port ${port}`))
