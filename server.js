@@ -12,6 +12,7 @@ require('./db/config');
 const User = require('./db/User');
 // prodyuct Schema
 const PrdouctsSchema = require('./db/products');
+const products = require('./db/products');
 
 // register and take info user
 app.post('/register', async (req, resp) => {
@@ -51,6 +52,12 @@ app.get('/products', async (req,resp) => {
     }else{
         resp.send({result: 'no products found'})
     }
+})
+
+// delete product
+app.delete('/product/:id', async (req,resp) => {
+    const result = await products.deleteOne({_id:req.params.id})
+    resp.send(result)
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}`))
