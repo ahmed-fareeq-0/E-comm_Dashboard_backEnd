@@ -60,4 +60,14 @@ app.delete('/product/:id', async (req,resp) => {
     resp.send(result)
 })
 
+// update product
+app.get('/product/:id', async (req,resp) => {
+    let result = await PrdouctsSchema.findOne({_id:req.params.id})
+    if(result){
+        resp.send(result)
+    }else{
+        resp.send({result:'no r found'})
+    }
+})
+
 app.listen(port, () => console.log(`Example app listening on port ${port}`))
