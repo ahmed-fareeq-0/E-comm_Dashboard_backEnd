@@ -60,7 +60,7 @@ app.delete('/product/:id', async (req,resp) => {
     resp.send(result)
 })
 
-// update product
+// get product details
 app.get('/product/:id', async (req,resp) => {
     let result = await PrdouctsSchema.findOne({_id:req.params.id})
     if(result){
@@ -68,6 +68,15 @@ app.get('/product/:id', async (req,resp) => {
     }else{
         resp.send({result:'no r found'})
     }
+})
+
+app.put('/product/:id', async (req,resp) => {
+    let result = await PrdouctsSchema.updateOne(
+        {_id:req.params.id},
+        {$set: req.body}
+    )
+
+    resp.send(result)
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}`))
