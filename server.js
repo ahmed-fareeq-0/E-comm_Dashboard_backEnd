@@ -70,12 +70,28 @@ app.get('/product/:id', async (req,resp) => {
     }
 })
 
+// update product
 app.put('/product/:id', async (req,resp) => {
     let result = await PrdouctsSchema.updateOne(
         {_id:req.params.id},
         {$set: req.body}
     )
 
+    resp.send(result)
+})
+
+// search in products
+app.get("/search/:key", async (req,resp) => {
+
+    let result = await PrdouctsSchema.find({
+        "$or":[
+            {title: {$regex: req.params.key}},
+            {price: {$regex: req.params.key}},
+            {category: {$regex: req.params.key}},
+            {company: {$regex: req.params.key}},
+           
+        ]
+    })
     resp.send(result)
 })
 
